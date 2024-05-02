@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="./styles/uikit.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="./styles/style.css">
+
+	<script src="./scripts/libraries/uikit.min.js"></script>
+	<script src="./scripts/libraries/uikit-icons.min.js"></script>
+	<script src="./scripts/libraries/dayjs.min.js"></script>
+	<script src="./scripts/libraries/relativeTime.js"></script>
+	<script src="./scripts/libraries/zip-full.min.js"></script>
+
+	<script>
+		dayjs.extend(dayjs_plugin_relativeTime)
+	</script>
+
+	<!-- iOS Support -->
+	<link rel="manifest" href="./manifest.json">
+	<link rel="apple-touch-icon" href="./img/icons/icon-96x96.png">
+	<!-- <meta name="apple-mobile-web-app-status-bar" content="#FF520E"> -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-startup-image" media="orientation: portrait" href="./img/icons/launch.png">
+	<link rel="apple-touch-startup-image" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)" href="./img/icons/launch.png">
+</head>
+<body>
+	<!-- NAV -->
+	<div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; end: false;" >
+		<nav class="uk-navbar-container" style="margin-top: -50px;">
+			<div class="uk-container">
+				<div uk-navbar="dropbar: true; dropbar-anchor: !.uk-navbar-container; target-y: !.uk-navbar-container">
+					<div class="uk-navbar-left">
+						<ul class="uk-navbar-nav">
+							<li class="uk-active"><a href="#">INSTAN</a></li>
+						</ul>
+					</div>
+
+					<div class="uk-navbar-right">
+						<ul class="uk-navbar-nav">
+							<li id="liShowingDataFrom">Data from -- days ago</li>
+						</ul>
+
+						<a class="uk-navbar-toggle uk-navbar-toggle-animate uk-icon uk-navbar-toggle-icon" href="" uk-navbar-toggle-icon="" role="button" aria-haspopup="true" aria-label="Open menu"></a>
+						
+						<div class="uk-navbar-dropdown uk-drop" uk-drop="mode: click; cls-drop: uk-navbar-dropdown; boundary: !.uk-navbar; stretch: x; flip: false" style="overflow-x: auto; top: 160px; left: 0px; width: 400px; max-width: 400px;">
+							<ul class="uk-nav uk-navbar-dropdown-nav">
+								<li class="uk-nav-header">Current session</li>
+								<li><a id="navDownloadSession"><span class="uk-margin-small-right uk-icon" uk-icon="download"></span>Download</a></li>
+								<li><a id="navDeleteSession"><span class="uk-margin-small-right uk-icon" uk-icon="trash"></span>Delete</a></li>
+								<li><a id="navTestButton"><span class="uk-margin-small-right uk-icon" uk-icon="crosshairs"></span>Test</a></li>
+								<li class="uk-nav-divider"></li>
+								<li class="uk-nav-header">Instagram Data</li>
+								<li>
+									<p class="uk-text-middle">Add the ZIP file that Instagram has </p>
+									
+									<div class="uk-margin" uk-margin>
+										<div uk-form-custom="target: true">
+											<input type="file" id="inputZIP" aria-label="Custom controls">
+											<input class="uk-input uk-form-width-medium" type="text" id="" placeholder="Select file" aria-label="Custom controls" disabled>
+										</div>
+										<button class="uk-button uk-button-default" id="btnInstaNav" >Upload Data</button>
+									</div>
+								</li>
+								<li class="uk-nav-divider"></li>
+								<li>
+									<ul uk-accordion>
+										<li>
+											<a class="uk-accordion-title uk-nav-header" href>Session data <span class="uk-text-meta">(optional)</span></a>
+											<div class="uk-accordion-content">
+												<p class="uk-text-middle">Optionally you can use the recorded data or tracked progress from a previous Sessio, by uploading the session file (JSON) </p>
+												<div class="uk-margin " uk-margin>
+													<div uk-form-custom="target: true">
+														<input type="file" id="inputSession" aria-label="Custom controls">
+														<input class="uk-input" type="text" placeholder="Select file" aria-label="Custom controls" disabled>
+													</div>
+													<button class="uk-button uk-button-default" id="btnSessionNav">Upload Data</button>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<section class="uk-section uk-section-default">
+		<div class="uk-container">
+			<div class="uk-grid-small uk-child-width-1-2 uk-child-width-1-4@l uk-text-center" uk-grid>
+				<div>
+					<div id="tileFollowers" class="uk-card uk-card-default uk-card-hover uk-card-body uk-box-shadow-medium">
+						<p class="uk-margin-remove-bottom">Followers</p>
+						<h4 class="uk-card-title uk-margin-remove-vertical" id="tileFollowersNumber">--</h4>
+						<p class="uk-margin-remove-top uk-text-meta" id="tileFollowersDifference"></p>
+					</div>
+				</div>
+				<div>
+					<div id="tileFollowing" class="uk-card uk-card-default uk-card-hover uk-card-body uk-box-shadow-medium">
+						<p class="uk-margin-remove-bottom">Following </p>
+						<h4 class="uk-card-title uk-margin-remove-vertical" id="tileFollowingNumber">--</h4>
+						<p class="uk-margin-remove-top uk-text-meta" id="tileFollowingDifference"></p>
+					</div>
+				</div>
+				<div>
+					<div id="tileUnfollowedYou" class="uk-card uk-card-default uk-card-hover uk-card-body uk-box-shadow-medium">
+						<p class="uk-margin-remove-bottom">Have Unfollowed You</p>
+						<h4 class="uk-card-title uk-margin-remove-vertical" id="tileUnfollowedYouNumber">--</h4>
+						<p class="uk-margin-remove-top uk-text-meta" id="tileUnfollowedYouDifference"></p>
+					</div>
+				</div>
+				<div>
+					<div id="tileNotFollowingBack" class="uk-card uk-card-default uk-card-hover uk-card-body uk-box-shadow-medium">
+						<p class="uk-margin-remove-bottom">Not Following Back</p>
+						<h4 class="uk-card-title uk-margin-remove-vertical" id="tileNotFollowingBackNumber">--</h4>
+						<p class="uk-margin-remove-top uk-text-meta" id="tileNotFollowingBackDifference"></p>
+					</div>
+				</div>
+			</div>
+			<div class="uk-grid-small uk-child-width-1-1 uk-text-center" uk-grid>
+				<div>
+					<div class="uk-card uk-card-default uk-card-hover uk-card-body uk-box-shadow-large">
+						<canvas id="overviewChart"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="uk-section uk-section-muted">
+		
+		<div class="uk-container" id="divContainerList">
+			<form class="uk-form-stacked">
+				<div class="uk-margin">
+					<label class="uk-form-label" for="selectFilterList">Filter List</label>
+					<div class="uk-form-controls">
+						<select class="uk-select" id="selectFilterList">
+							<option value="all">All</option>
+							<option>Option 02</option>
+						</select>
+					</div>
+				</div>
+				<div class="uk-margin">
+					<label class="uk-form-label" for="selectAdditionalFilters">Additional Filters</label>
+					<div class="uk-form-controls">
+						<select class="uk-select" id="selectAdditionalFilters">
+							<option>None</option>
+							<option>Option 02</option>
+						</select>
+					</div>
+				</div>
+			</form>
+			<ul class="uk-child-width-1-1 uk-list" id="connectionsList">
+				<li>
+					<div class="uk-card uk-card-small uk-card-default uk-card-body">
+						<div class="uk-grid-small uk-flex-middle" uk-grid>
+							<div class="uk-width-auto">
+								<i class="fa-solid fa-user-large-slash"></i>
+							</div>
+							<div class="uk-width-expand">
+								<p class="uk-margin-remove-bottom">Blocked by you</p>
+								<p class="uk-text-meta uk-position-small uk-position-center-right">
+									<span class="uk-badge"><i class="fa-solid fa-star"></i></span>
+									<span class="uk-badge"><i class="fa-solid fa-circle-user"></i></span>
+								</p>
+							</div>
+							<div class="uk-width-auto uk-margin-small-right">
+								<i class="fa-solid fa-user-large-slash"></i>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<!-- <button class="uk-button uk-button-text uk-button-large uk-width-1-1 uk-margin-small-bottom" id="btnLoadMoreUsers">
+				<span class="uk-margin-small-right uk-icon" uk-icon="icon: plus-circle"></span>Load More users...
+			</button> -->
+		</div>
+	</section>
+	<section>
+		<div id="offcanvas-overlay" uk-offcanvas="mode: push; overlay: true">
+			<div class="uk-offcanvas-bar uk-width-1-1">
+		
+				<button class="uk-offcanvas-close" type="button" uk-close></button>
+		
+				<h1>inSTAn</h1>
+				<h2>Instagram Stalker Follower Analytics</h2>
+		
+				<p class="uk-text-lead">Keeping track of your audience and your data without having to login. Open-source and 100% free.</p>
+				<p>This tool doesn't require access to your account. Your data is only stored on your device and not on any server. We don't even have to use a cookie banner because we don't store any of your data.</p>
+				<h3>How it works</h3>
+				<ul uk-accordion>
+					<li>
+						<a class="uk-accordion-title" href>1. Request your Instagram data</a>
+						<div class="uk-accordion-content">
+							
+						</div>
+					</li>
+					<li>
+						<a class="uk-accordion-title" href>Upload your data</a>
+						<div class="uk-accordion-content">
+							<ul uk-accordion>
+								<li class="uk-open">
+									<a class="uk-accordion-title uk-nav-header" href>Instagram data</a>
+									<div class="uk-accordion-content">
+										<p class="uk-text-middle">Add the ZIP file that Instagram has</p>
+										<div class="uk-margin " uk-margin>
+											<div uk-form-custom="target: true">
+												<input type="file" id="inputInstaOffCanvas" aria-label="Custom controls">
+												<input class="uk-input" type="text" placeholder="Select file" aria-label="Custom controls" disabled>
+											</div>
+											<button class="uk-button uk-button-default" id="btnInstaOffCanvas">Upload Data</button>
+										</div>
+									</div>
+								</li>
+								<li>
+									<a class="uk-accordion-title uk-nav-header" href>Session data <span class="uk-text-meta">(optional)</span></a>
+									<div class="uk-accordion-content">
+										<p class="uk-text-middle">Optionally you can use the recorded data or tracked progress from a previous Sessio, by uploading the session file (JSON) </p>
+										<div class="uk-margin " uk-margin>
+											<div uk-form-custom="target: true">
+												<input type="file" id="inputSessionOffCanvas" aria-label="Custom controls">
+												<input class="uk-input" type="text" placeholder="Select file" aria-label="Custom controls" disabled>
+											</div>
+											<button class="uk-button uk-button-default" id="btnSessionOffCanvas">Upload Data</button>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+				
+			</div>
+		</div>
+	</section>
+	<div id="modalUserDetails" class="uk-flex-top" uk-modal>
+		<div class="uk-modal-dialog uk-margin-auto-vertical">
+			<button class="uk-modal-close-default" type="button" uk-close></button>
+			<div class="uk-modal-header">
+				<div class="uk-card uk-card-default uk-width-1-1">
+					<div class="uk-card-header">
+						<div class="uk-grid-small uk-flex-middle" uk-grid>
+							<div class="uk-width-expand">
+								<h3 class="uk-card-title uk-margin-remove-bottom" id="modalUserDetailsTitle">Title</h3>
+								<p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">April 01, 2016</time></p>
+							</div>
+						</div>
+					</div>
+					<div class="uk-card-body">
+						<ul class="uk-list uk-list-divider" id="ulUserDetails">
+							<li>
+								<span class="uk-margin-small-right uk-icon" uk-icon>
+									<i class="fa-solid fa-user-large-slash"></i>
+								</span>
+								List item 1
+							</li>
+							<li>
+								<span class="uk-margin-small-right">
+									<i class="fa-solid fa-user-large-slash"></i>
+								</span>
+								List item 1
+							</li>
+							<li>List item 2</li>
+							<li>List item 3</li>
+						</ul>
+					</div>
+					<div class="uk-card-footer">
+						<a id="anchorUserDetails" href="#" class="uk-button uk-button-primary" target="_blank">
+							<span class="uk-margin-small-right uk-icon " uk-icon="instagram"></span>
+							Open Instagram Profile
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="uk-modal-body">
+				<table class="uk-table uk-table-small uk-table-middle uk-table-divider uk-table-striped">
+					<thead>
+						<tr>
+							<th class="uk-width-auto">Date</th>
+							<th class="uk-table-expand">Activity</th>
+						</tr>
+					</thead>
+					<tbody id="tbodyUserDetailsHistory">
+						<tr>
+							<td class="uk-text-meta">(;17u)</td>
+							<td>Removed from close-friends</td>
+						</tr>
+						<tr>
+							<td>Yesterday</td>
+							<td>Table Data</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="uk-modal-footer uk-text-right">
+				<button class="uk-button uk-button-default uk-modal-close" type="button">Close</button>
+				<!-- <button class="uk-button uk-button-primary" type="button"></button> -->
+			</div>
+		</div>
+	</div>
+
+	
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="./scripts/utilities.js"></script>
+	<script src="./scripts/localStorage.js"></script>
+	<script src="./scripts/handleDataIG.js"></script>
+	<script src="./scripts/createSession.js"></script>
+	
+	<script src="./scripts/handleSession.js"></script>
+	
+	<script src="./scripts/handleUpload.js"></script>
+	<script src="./scripts/userListDOM.js"></script>
+	<script src="./scripts/userDetailsDOM.js"></script>
+
+	<script src="./scripts/optionsDropdowns.js"></script>
+	<script src="./scripts/createTiles.js"></script>
+	<script src="./scripts/loadApp.js"></script>
+	<!-- <script src="./scripts/funTests.js"></script> -->
+	<!-- <script src="./scripts/myTests.js"></script> -->
+</body>
+</html>

@@ -1,0 +1,47 @@
+/* https://huemint.com/brand-intersection/#palette=fefefa-2c40b3-8c8af8-ff520e */
+
+body, section {
+	margin: 0px;
+	padding: 0px;
+}
+
+.uk-timeline .uk-timeline-item .uk-card {
+	max-height: 1700px;
+}
+
+.uk-timeline .uk-timeline-item {
+    display: flex;
+    position: relative;
+}
+
+.uk-timeline .uk-timeline-item::before {
+    background: #8c8af8;
+    content: "";
+    height: 100%;
+    left: 19px;
+    position: absolute;
+    top: 20px;
+    width: 2px;
+		z-index: -1;
+}
+
+.uk-timeline .uk-timeline-item .uk-timeline-icon .uk-badge {
+	
+		margin-top: 20px;
+    width: 40px;
+    height: 40px;
+}
+
+.how-to-badge {
+	background-color: #2c40b3;
+}
+
+.step-badge {
+	background-color: #ff420e;
+}
+
+.uk-timeline .uk-timeline-item .uk-timeline-content {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 0 0 0 1rem;
+}
