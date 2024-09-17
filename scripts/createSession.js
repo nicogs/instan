@@ -8,12 +8,16 @@ function createSessionData(_connections, _stats) {
 		stats: [..._stats]
 	}
 
+	console.log("New Styats", newStats)
 	// Check if there is already a session logged for a date
 	const statIndex = mySession.stats.findIndex(stat => stat.timestamp * 1 == newStats.timestamp)
 	if(statIndex == -1) {
 		mySession.stats.push(newStats)
 	} else {
+		mySession.stats.sort((a,b) => a.timestamp - newStats.timestamp)
+		mySession.stats.pop()
 		mySession.stats.push(newStats)
+		// mySession.stats.push(newStats)
 		// mySession.stats[statIndex] = newStats
 	}
 	mySession.stats.sort((a,b) => a.timestamp - b.timestamp)

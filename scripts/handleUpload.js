@@ -1,41 +1,65 @@
 const inputZIP = document.getElementById("inputZIP")
 const inputInstaOffCanvas = document.getElementById("inputInstaOffCanvas")
-inputZIP.addEventListener("change", loadZIP)
-inputInstaOffCanvas.addEventListener("change", loadZIP)
 
 
 const inputSession = document.getElementById("inputSession")
 const inputSessionOffCanvas = document.getElementById("inputSessionOffCanvas")
-inputSession.addEventListener("change", loadSession)
-inputSessionOffCanvas.addEventListener("change", loadSession)
-
 
 const tileIgDataDiv = document.getElementById("tileIgDataDiv")
 const tileSessionDataDiv = document.getElementById("tileSessionDataDiv")
 
-
 const btnInstaOffCanvas = document.getElementById("btnInstaOffCanvas")
+const btnInputInstaOffCanvas = document.getElementById("btnInputInstaOffCanvas")
+const btnInstaNav = document.getElementById("btnInstaNav")
+const btnInputZIP = document.getElementById("btnInputZIP")
+const btnInputSession = document.getElementById("btnInputSession")
+
+const btnSessionOffCanvas = document.getElementById("btnSessionOffCanvas")
+const btnInputSessionOffCanvas = document.getElementById("btnInputSessionOffCanvas")
+
+const btnSessionNav = document.getElementById("btnSessionNav")
+
+inputZIP.addEventListener("change", () => {
+	btnInputZIP.classList.add("uk-hidden")
+	btnInstaNav.classList.remove("uk-invisible")
+
+})
+inputZIP.addEventListener("change", loadZIP)
+
+inputInstaOffCanvas.addEventListener("change", () => {
+	btnInputInstaOffCanvas.classList.add("uk-hidden")
+	btnInstaOffCanvas.classList.remove("uk-invisible")
+
+})
+inputInstaOffCanvas.addEventListener("change", loadZIP)
+
+
+inputSession.addEventListener("change", () => {
+	btnInputSession.classList.add("uk-hidden")
+	btnSessionNav.classList.remove("uk-invisible")
+})
+inputSession.addEventListener("change", loadSession)
+
+inputSessionOffCanvas.addEventListener("change", () => {
+	btnInputSessionOffCanvas.classList.add("uk-hidden")
+	btnSessionOffCanvas.classList.remove("uk-invisible")
+})
+inputSessionOffCanvas.addEventListener("change", loadSession)
+
 btnInstaOffCanvas.addEventListener("click", () => {
-	
 	handleUpload(instaUploadedList, instaUploadLatestTimestamp)
 	UIkit.offcanvas("#offcanvas-overlay").hide();
 })
-
-const btnInstaNav = document.getElementById("btnInstaNav")
 btnInstaNav.addEventListener("click", () => handleUpload(instaUploadedList, instaUploadLatestTimestamp))
-
-const btnSessionOffCanvas = document.getElementById("btnSessionOffCanvas")
 btnSessionOffCanvas.addEventListener("click", () => {
 	saveSessionToLocalStorage(sessionUploaded)
 	handleUpload(sessionUploadedList, sessionUploadLatestTimestamp)
 	UIkit.offcanvas("#offcanvas-overlay").hide();
 })
-const btnSessionNav = document.getElementById("btnSessionNav")
 btnSessionNav.addEventListener("click", () => {
 	saveSessionToLocalStorage(sessionUploaded)
 	handleUpload(sessionUploadedList, sessionUploadLatestTimestamp)
 })
-
 
 function handleOffCanvasLoadIn() {
 	handleLoadIn()

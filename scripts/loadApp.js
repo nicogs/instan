@@ -4,13 +4,13 @@ if("serviceWorker" in navigator) {
 	.catch((err) => console.log("Service worker not registered", err))
 }
 
-iosPWASplash('../img/icons/icon-1024x1024.png')
+
 
 document.addEventListener("DOMContentLoaded", (event) => {
-	checkNotificationPermission()
+	// checkNotificationPermission()
 	// document.designMode = "on"
 	if(hasSessionInLocalStorage()) {
-		console.log("Has session in localStorage");
+		console.log("Has session in localStorage ✅");
 		const currentSessionData = getSessionFromLocalStorage()
 		renderDom(currentSessionData.connections)
 	} else {

@@ -25,7 +25,7 @@ const loadFiles = async function() {
 			
 			
 			// Favoritd accounts <i class="fa-solid fa-star"></i>
-			if(file.filename === "connections/followers_and_following/accounts_you've_favorited.json") {
+			if(file.filename === "connections/followers_and_following/accounts_you've_favorited.json" || file.filename === "connections/followers_and_following/profiles_you've_favorited.json") {
 				fileJson["relationships_feed_favorites"].forEach((user) => {
 					const newName = user.string_list_data[0].value
 					const newTimestamp = user.string_list_data[0].timestamp * 1000
@@ -36,7 +36,7 @@ const loadFiles = async function() {
 				});
 			}
 			// Blocked Accounts <i class="fa-solid fa-user-large-slash"></i>
-			if(file.filename === "connections/followers_and_following/blocked_accounts.json") {
+			if(file.filename === "connections/followers_and_following/blocked_accounts.json" || file.filename === "connections/followers_and_following/blocked_profiles.json") {
 				fileJson["relationships_blocked_users"].forEach((user) => {
 					const newName = user.title
 					const newTimestamp = user.string_list_data[0].timestamp * 1000
@@ -130,7 +130,7 @@ const loadFiles = async function() {
 			// }
 
 			// recently_unfollowed_accounts <i class="fa-solid fa-user-minus"></i>
-			if(file.filename === "connections/followers_and_following/recently_unfollowed_accounts.json") {
+			if(file.filename === "connections/followers_and_following/recently_unfollowed_accounts.json" || file.filename === "connections/followers_and_following/recently_unfollowed_profiles.json") {
 				fileJson["relationships_unfollowed_users"].forEach((user) => {
 					const newName = user.string_list_data[0].value
 					const newTimestamp = user.string_list_data[0].timestamp * 1000
@@ -141,7 +141,7 @@ const loadFiles = async function() {
 				});
 			}
 			// restricted_users <i class="fa-solid fa-user-lock"></i>
-			if(file.filename === "connections/followers_and_following/restricted_accounts.json") {
+			if(file.filename === "connections/followers_and_following/restricted_accounts.json" || file.filename === "connections/followers_and_following/restricted_profiles.json") {
 				fileJson["relationships_restricted_users"].forEach((user) => {
 					const newName = user.string_list_data[0].value
 					const newTimestamp = user.string_list_data[0].timestamp * 1000
