@@ -63,9 +63,7 @@ self.addEventListener("activate", event => {
 			)
 		})
 	)
-	setTimeout(() => {
-		mimicNotif()
-	}, 5000)
+
 })
 
 // Fetch event
@@ -94,25 +92,3 @@ self.addEventListener("push", (event) => {
 	promises.push(self.registration.showNotification(event.data.text()))
 	event.waitUntil(Promise.all(promises));
 })
-
-function mimicNotif() {
-	const notifLogo = "/img/icons/icon-96x96.png"
-	const icon = "Mmic Notif working?"
-
-	const options = {
-		body: "Okeeey Letsgooooo",
-		icon: "/img/icons/icon-192x192.png",
-		badge: "/img/icons/icon-192x192.png",
-		image: "/img/icons/icon-192x192.png"
-
-	}
-
-	const promises = []
-    if ('setAppBadge' in self.navigator) {
-		const badgeCount = 1
-		const promise = self.navigator.setAppBadge(badgeCount);
-		promises.push(promise);
-	}
-	promises.push(self.registration.showNotification("INSTAN", options))
-	Promise.all(promises)
-}
