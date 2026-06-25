@@ -1,5 +1,5 @@
-const staticCacheName = "site-static-v8"
-const dynamicCache = "site-dynamic-v7"
+const staticCacheName = "site-static-v9"
+const dynamicCache = "site-dynamic-v8"
 const assets = [
 	"/",
 	"/index.html",
@@ -11,7 +11,7 @@ const assets = [
 	"/scripts/libraries/zip-full.min.js",
 	"/scripts/createSession.js",
 	"/scripts/createTiles.js",
-	"/scripts/handleDataIG.js",
+	"/scripts/handleDataIG.v2.js",
 	"/scripts/handleSession.js",
 	"/scripts/handleUpload.js",
 	"/scripts/loadApp.js",
